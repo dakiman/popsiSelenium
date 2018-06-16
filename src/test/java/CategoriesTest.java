@@ -2,7 +2,6 @@ import config.Driver;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import org.testng.asserts.Assertion;
 import pageObjects.CategoriesPage;
 import utils.BaseTest;
 

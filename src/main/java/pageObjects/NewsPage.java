@@ -8,7 +8,7 @@ import utils.RandomUtils;
 
 import java.util.List;
 
-public class CategoriesPage extends BasePage {
+public class NewsPage extends BasePage{
     @FindBy(name = "title_en")
     WebElement title_en;
     @FindBy(name = "title_mk")
@@ -22,11 +22,12 @@ public class CategoriesPage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'alert-success')]")
     WebElement successBox;
     @FindBy(xpath = "//div[contains(@class, 'col-md-2 panel text-center m-x-2')]")
-    List<WebElement> allCategories;
+    List<WebElement> allNews;
     @FindBy(xpath = "//button[@id='btn-confirm']")
     WebElement confirmBtn;
 
     private String title_en_value, title_mk_value, description_en_value, description_mk_value;
+
 
     private void generateValues() {
         title_en_value = RandomUtils.randomString(10);
@@ -35,7 +36,7 @@ public class CategoriesPage extends BasePage {
         description_mk_value = RandomUtils.randomString(30);
     }
 
-    public CategoriesPage populateAndSubmitForm() {
+    public NewsPage populateAndSubmitForm() {
         this.generateValues();
 
         clearAndSendKeys(title_en, title_en_value);
@@ -49,26 +50,8 @@ public class CategoriesPage extends BasePage {
         return this;
     }
 
-    public Boolean categoryWasDeleted() {
-        WebElement box = driver.findElement(By.xpath("//div[div/div/text() = '"+title_mk_value+"']"));
-        waitElementToBeInvisible(new WebDriverWait(driver, 3), box);
-        return !box.isDisplayed();
-    }
-
-    public CategoriesPage deleteCurrentCategory() {
-        dependableClick(driver, driver.findElement(By.xpath("//div[div/text() = '"+ title_mk_value +"']/button[contains(@class, 'btn-delete')]")));
-        dependableClick(driver, confirmBtn);
-        return this;
-    }
-
-    public CategoriesPage pickRandomCategory() {
-        WebElement randomCategory = allCategories.get(RandomUtils.randomInt(0, allCategories.size() - 1));
-        dependableClick(driver, randomCategory.findElement(By.xpath("//button[contains(@class, 'btn btn-success')]")));
-        return this;
-    }
-
-    public Boolean categoryExists() {
-        driver.get(baseUrl + "/admin/categories");
+    public Boolean newsExist() {
+        navigateTo("/admin/news");
         try {
             driver.findElement(By.xpath("//div[text() = '" + title_mk_value + "']"));
             return true;
@@ -81,5 +64,6 @@ public class CategoriesPage extends BasePage {
     public Boolean confirmSuccessMessage(String msg) {
         return successBox.getText().equals(msg);
     }
+
 
 }
