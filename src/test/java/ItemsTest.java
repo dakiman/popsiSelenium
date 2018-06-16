@@ -16,7 +16,7 @@ public class ItemsTest extends BaseTest {
         auth();
     }
 
-    @Test(priority = 1)
+    @Test
     void itemCanBeEdited() {
         itemsPage.navigateTo("/admin/items");
         itemsPage.
@@ -36,7 +36,7 @@ public class ItemsTest extends BaseTest {
 
 
     @Test
-    public void itemCanBeDeleted() {
+    void itemCanBeDeleted() {
         itemsPage.navigateTo("/admin/items/create");
         itemsPage.populateAndSubmitForm();
         Assert.assertTrue(itemsPage.itemExists());

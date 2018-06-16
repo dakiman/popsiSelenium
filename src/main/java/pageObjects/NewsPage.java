@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.RandomUtils;
 
@@ -50,6 +51,19 @@ public class NewsPage extends BasePage{
         return this;
     }
 
+    public NewsPage populateAndSubmitEditForm() {
+        this.generateValues();
+
+        clearAndSendKeys(title_en, title_en_value);
+        clearAndSendKeys(title_mk, title_mk_value);
+        clearAndSendKeys(description_en, description_en_value);
+        clearAndSendKeys(description_mk, description_mk_value);
+
+        title_en.submit();
+
+        return this;
+    }
+
     public Boolean newsExist() {
         navigateTo("/admin/news");
         try {
@@ -59,6 +73,25 @@ public class NewsPage extends BasePage{
             e.printStackTrace();
             return false;
         }
+    }
+
+    public NewsPage deleteCurrentNews() {
+        dependableClick(driver, driver.findElement(By.xpath("//div[div/text() = '"+ title_mk_value +"']/button[contains(@class, 'btn-delete')]")));
+        dependableClick(driver, confirmBtn);
+        return this;
+    }
+
+    public Boolean newsWasDeleted() {
+        WebElement box = driver.findElement(By.xpath("//div[div/div/text() = '"+title_mk_value+"']"));
+        waitElementToBeInvisible(new WebDriverWait(driver, 3), box);
+        return !box.isDisplayed();
+    }
+
+    public NewsPage editRandomNews() {
+        WebElement randomItem = allNews.get(RandomUtils.randomInt(0, allNews.size() - 1));
+        dependableClick(driver, randomItem.findElement(By.xpath("//button[contains(@class, 'btn btn-success')]")));
+
+        return this;
     }
 
     public Boolean confirmSuccessMessage(String msg) {
