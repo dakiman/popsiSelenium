@@ -9,7 +9,7 @@ import utils.RandomUtils;
 
 import java.util.List;
 
-public class NewsPage extends BasePage{
+public class NewsPage extends BasePage {
     @FindBy(name = "title_en")
     WebElement title_en;
     @FindBy(name = "title_mk")
@@ -76,13 +76,13 @@ public class NewsPage extends BasePage{
     }
 
     public NewsPage deleteCurrentNews() {
-        dependableClick(driver, driver.findElement(By.xpath("//div[div/text() = '"+ title_mk_value +"']/button[contains(@class, 'btn-delete')]")));
+        dependableClick(driver, driver.findElement(By.xpath("//div[div/text() = '" + title_mk_value + "']/button[contains(@class, 'btn-delete')]")));
         dependableClick(driver, confirmBtn);
         return this;
     }
 
     public Boolean newsWasDeleted() {
-        WebElement box = driver.findElement(By.xpath("//div[div/div/text() = '"+title_mk_value+"']"));
+        WebElement box = driver.findElement(By.xpath("//div[div/div/text() = '" + title_mk_value + "']"));
         waitElementToBeInvisible(new WebDriverWait(driver, 3), box);
         return !box.isDisplayed();
     }

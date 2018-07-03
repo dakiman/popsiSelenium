@@ -26,7 +26,7 @@ public class ItemsPage extends BasePage {
     List<WebElement> allItems;
     @FindBy(xpath = "//button[@id='btn-confirm']")
     WebElement confirmBtn;
-    @FindBy(name="category_id")
+    @FindBy(name = "category_id")
     WebElement categorySelectElement;
     @FindBy(id = "selector")
     WebElement dropdownSelectElement;
@@ -56,13 +56,13 @@ public class ItemsPage extends BasePage {
     public ItemsPage deleteCurrentItem() {
         Select dropdownMenu = new Select(dropdownSelectElement);
         dropdownMenu.selectByIndex(category_index);
-        dependableClick(driver, driver.findElement(By.xpath("//div[div/text() = '"+ title_mk_value +"']/button[contains(@class, 'btn-delete')]")));
+        dependableClick(driver, driver.findElement(By.xpath("//div[div/text() = '" + title_mk_value + "']/button[contains(@class, 'btn-delete')]")));
         dependableClick(driver, confirmBtn);
         return this;
     }
 
     public Boolean itemWasDeleted() {
-        WebElement box = driver.findElement(By.xpath("//div[div/div/text() = '"+title_mk_value+"']"));
+        WebElement box = driver.findElement(By.xpath("//div[div/div/text() = '" + title_mk_value + "']"));
         waitElementToBeInvisible(new WebDriverWait(driver, 3), box);
         return !box.isDisplayed();
     }
